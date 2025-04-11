@@ -7,7 +7,7 @@ import {
   BotLLMTextData,
 } from '@pipecat-ai/client-js';
 import { useRTVIClient, useRTVIClientEvent } from '@pipecat-ai/client-react';
-
+import './DebugDisplay.css';
 interface Message {
   id: string;
   text: string;
@@ -194,20 +194,21 @@ export function DebugDisplay({ onNewMessage }: DebugDisplayProps) {
   );
 
   return (
-    <div className="w-full h-full mx-auto p-6 bg-zinc-50">
+    <div className="w-full h-full mx-auto p-6 bg-transparent">
       <div className="flex flex-col gap-4 pb-16">
+        <div className="flex items-center justify-center h-[25rem]"></div>
         {messages.map((message) => (
           <div
             key={message.id}
             className={`
               flex animate-message-pop
-              ${message.type === 'system' ? 'justify-center mx-auto w-full' : 'max-w-[80%]'}
+              ${message.type === 'system' ? 'justify-center mx-auto w-full hidden' : 'max-w-[80%]'}
               ${message.type === 'user' ? 'justify-end ml-auto' : ''}
               ${message.type === 'assistant' ? 'justify-start mr-auto' : ''}
             `}
           >
             {message.type === 'system' ? (
-              <div className="text-sm text-zinc-500 font-medium text-center">
+              <div className="text-sm text-zinc-500 font-medium text-center opacity-0">
                 {message.text}
               </div>
             ) : (
@@ -219,9 +220,9 @@ export function DebugDisplay({ onNewMessage }: DebugDisplayProps) {
                 )}
                 <div
                   className={`
-                    px-4 py-3 rounded-2xl shadow-sm transition-all duration-300 hover:shadow-md
+                    px-4 py-3 opacity-70 rounded-2xl shadow-sm transition-all duration-300 hover:shadow-md
                     ${message.type === 'user' ? 'bg-zinc-800 text-white' : ''}
-                    ${message.type === 'assistant' ? 'bg-white text-zinc-800' : ''}
+                    ${message.type === 'assistant' ? 'bg-zinc-800 text-white' : ''}
                   `}
                 >
                   <div className="break-words">{message.text}</div>
